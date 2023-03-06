@@ -24,16 +24,16 @@ Here is the 'error.log' file.
 Then you execute the `edge` command. Then shown the first line and last line.
 
     $ edge error.log
-    1: 2014/06/27 08:43:00,not found
-    4: 2014/06/27 08:43:03,no auth
+    1: 2023/02/27 08:43:00,not found
+    4: 2023/02/27 08:43:03,no auth
 
 The number of top of line is line number of the file.
 
 And you can use `-c` option to know total line number.
 
     $ edge -c error.log
-    1: 2014/06/27 08:43:00,not found
-    4: 2014/06/27 08:43:03,no auth
+    1: 2023/02/27 08:43:00,not found
+    4: 2023/02/27 08:43:03,no auth
     total 4 lines
 
 The above is pretty much the same as below command executions:
