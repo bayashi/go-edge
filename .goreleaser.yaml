@@ -6,3 +6,9 @@ builds:
       - windows
       - darwin
   - main: ./cmd/edge
+    id: "edge"
+    binary: edge
+    goos:
+      - linux
+      - darwin
+      - windows
