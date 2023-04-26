@@ -1,11 +1,7 @@
 builds:
   - env:
       - CGO_ENABLED=0
-    goos:
-      - linux
-      - windows
-      - darwin
-  - main: ./cmd/edge
+    main: ./cmd/edge
     id: "edge"
     binary: edge
     goos:
