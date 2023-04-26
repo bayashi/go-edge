@@ -2,4 +2,4 @@
 .vscode
 *.sw[po]
 vendor
-dist
+dist/
