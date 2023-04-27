@@ -5,14 +5,15 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"runtime"
+	"runtime/debug"
 
 	"github.com/pkg/errors"
 	flag "github.com/spf13/pflag"
 )
 
 const (
-	cmd     string = "edge"
-	version string = "0.0.1"
+	cmd string = "edge"
 
 	exitOK  int = 0
 	exitErr int = 1
@@ -23,6 +24,11 @@ type options struct {
 	grep           []string
 	showTotalCount bool
 }
+
+var (
+	version = ""
+	installFrom = "Source"
+)
 
 func main() {
 	err := Run()
@@ -125,7 +131,9 @@ func (o *options) isMatchedLine(line *string) bool {
 
 func (o *options) parseArgs() {
 	var flagHelp bool
+	var flagVersion bool
 	flag.BoolVarP(&flagHelp, "help", "h", false, "Show help (This message) and exit")
+	flag.BoolVarP(&flagVersion, "version", "v", false, "Show version and build info and exit")
 
 	flag.StringArrayVarP(&o.grep, "grep", "g", []string{}, "Search PATTERN in each line")
 	flag.BoolVarP(&o.showTotalCount, "c", "c", false, "Show tatl count of a file")
@@ -133,8 +141,40 @@ func (o *options) parseArgs() {
 	flag.Parse()
 
 	if flagHelp {
-		putHelp(fmt.Sprintf("[%s] Version v%s", cmd, version))
+		putHelp(fmt.Sprintf("[%s] Version %s", cmd, getVersion()))
 	}
+
+	if flagVersion {
+		putErr(versionDetails())
+		os.Exit(exitOK)
+	}
+}
+
+func versionDetails() string {
+	goos := runtime.GOOS
+	goarch := runtime.GOARCH
+	compiler := runtime.Version()
+
+	return fmt.Sprintf(
+		"Version %s - %s.%s (compiled:%s, %s)",
+		getVersion(),
+		goos,
+		goarch,
+		compiler,
+		installFrom,
+	)
+}
+
+func getVersion() string {
+    if version != "" {
+        return version
+    }
+    i, ok := debug.ReadBuildInfo()
+    if !ok {
+        return "Unknown"
+    }
+
+    return i.Main.Version
 }
 
 func (o *options) getTargetFile() {

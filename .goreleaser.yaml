@@ -8,6 +8,7 @@ builds:
       - linux
       - darwin
       - windows
+    ldflags: -s -w -X main.version={{.Version}} -X "main.installFrom=Binary"
 archives:
   - format_overrides:
       - goos: windows
