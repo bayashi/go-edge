@@ -8,3 +8,7 @@ builds:
       - linux
       - darwin
       - windows
+archives:
+  - format_overrides:
+      - goos: windows
+        format: zip
