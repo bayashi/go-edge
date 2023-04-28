@@ -26,7 +26,7 @@ type options struct {
 }
 
 var (
-	version = ""
+	version     = ""
 	installFrom = "Source"
 )
 
@@ -81,7 +81,7 @@ func (o *options) pickLogs() error {
 	total := 0
 	needGrep := len(o.grep) > 0
 	var (
-		line string
+		line     string
 		lastLine *string
 	)
 
@@ -166,15 +166,15 @@ func versionDetails() string {
 }
 
 func getVersion() string {
-    if version != "" {
-        return version
-    }
-    i, ok := debug.ReadBuildInfo()
-    if !ok {
-        return "Unknown"
-    }
+	if version != "" {
+		return version
+	}
+	i, ok := debug.ReadBuildInfo()
+	if !ok {
+		return "Unknown"
+	}
 
-    return i.Main.Version
+	return i.Main.Version
 }
 
 func (o *options) getTargetFile() {
